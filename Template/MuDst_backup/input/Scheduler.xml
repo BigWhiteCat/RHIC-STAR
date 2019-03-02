@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job fileListSyntax="xrootd" minFilesPerProcess="1" maxFilesPerProcess="1" simulateSubmission="false">
+	<command>
+		set mainDir = /star/u/jhai/MuDst
+		cp -r ${mainDir}/.sl73_gcc485 .
+		cp -r ${mainDir}/StRoot .
+		cp    ${mainDir}/Main.C .
+
+		starver SL18c
+
+		root4star -q -b Main.C\(\"$FILELIST\",$INPUTFILECOUNT,0,\"$SCRATCH/\",\"$JOBID\"\)
+	</command>
+
+	<stdout URL="file:/star/u/jhai/MuDst/input/log/out/$JOBID.log"/>
+	<stderr URL="file:/star/u/jhai/MuDst/input/log/err/$JOBID.err"/>
+
+	<Generator>
+		<Location>/star/u/jhai/MuDst/input/log/report/</Location>
+		<ScriptLocation>/star/u/jhai/MuDst/input/log/csh/</ScriptLocation>
+		<ListLocation>/star/u/jhai/MuDst/input/log/list/</ListLocation>
+	</Generator>
+	<input URL="catalog:star.bnl.gov?storage=hpss,production=P18ic,trgsetupname=AuAu54_production_2017,filetype=daq_reco_picoDst,filename~st_physics" singleCopy="true" nFiles="2"/>
+    <!-- <input URL="filelist:/star/u/jhai/MuDst/input/list/total.list"/> -->
+	<output fromScratch="*.root" toURL="file:/star/u/jhai/MuDst/output/"/>
+</job>

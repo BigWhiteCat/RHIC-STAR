@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job fileListSyntax="xrootd" minFilesPerProcess="20" maxFilesPerProcess="30" simulateSubmission="false">
+	<command>
+		set mainDir = /star/u/jhai/WorkCode/54GeV/H3L
+		cp -r ${mainDir}/.sl73_gcc485 .
+		cp -r ${mainDir}/StRoot .
+		cp    ${mainDir}/readPicoDst.C .
+
+		starver SL18c
+
+		root4star -q -b readPicoDst.C\(\"$FILELIST\",$INPUTFILECOUNT,0,\"$SCRATCH/\",\"$JOBID\"\)
+	</command>
+
+	<stdout URL="file:/star/u/jhai/WorkCode/54GeV/H3L/input/part0/runinfo/out/$JOBID.log"/>
+	<stderr URL="file:/star/u/jhai/WorkCode/54GeV/H3L/input/part0/runinfo/err/$JOBID.err"/>
+
+	<Generator>
+		<Location>/star/u/jhai/WorkCode/54GeV/H3L/input/part0/runinfo/report/</Location>
+		<ScriptLocation>/star/u/jhai/WorkCode/54GeV/H3L/input/part0/runinfo/csh/</ScriptLocation>
+		<ListLocation>/star/u/jhai/WorkCode/54GeV/H3L/input/part0/runinfo/list/</ListLocation>
+	</Generator>
+	<!--input URL="catalog:star.bnl.gov?storage=hpss,production=P18ic,trgsetupname=AuAu54_production_2017,filetype=daq_reco_picoDst,filename~st_physics" singleCopy="true" nFiles="100"/-->
+    <input URL="filelist:/star/u/jhai/WorkCode/54GeV/H3L/input/list/total.list"/>
+	<output fromScratch="*.root" toURL="file:/star/u/jhai/gpfs01/DATA/54GeV/H3L/output0/"/>
+</job>
